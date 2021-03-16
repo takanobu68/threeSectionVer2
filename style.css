@@ -13,3 +13,8 @@ body {
   height: 90%;
   background-color: skyblue;
 }
+
+.video {
+  width: 0;
+  height: 0;
+}
