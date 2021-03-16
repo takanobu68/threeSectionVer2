@@ -1,0 +1,15 @@
+body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#scene-container {
+  width: 90%;
+  height: 90%;
+  background-color: skyblue;
+}
