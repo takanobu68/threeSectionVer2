@@ -37,8 +37,28 @@ const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
 const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
-sphere.position.set(0, 0, 20);
+sphere.position.set(0, 0, 10);
 scene.add(sphere);
+
+const sphereA = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphereA.position.set(-20, -8, 20);
+scene.add(sphereA);
+
+const sphereE = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphereE.position.set(20, -8, 20);
+scene.add(sphereE);
+
+const sphereB = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphereB.position.set(-10, -8, 20);
+scene.add(sphereB);
+
+const sphereC = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphereC.position.set(0, -8, 20);
+scene.add(sphereC);
+
+const sphereD = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphereD.position.set(10, -8, 20);
+scene.add(sphereD);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
