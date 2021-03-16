@@ -39,12 +39,14 @@ scene.add(plane2);
 
 const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
 const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+const spheremovieMaterial = new THREE.MeshBasicMaterial({ map: videoTexture });
+
+const sphere = new THREE.Mesh(sphereGeometry, spheremovieMaterial);
 
 sphere.position.set(0, 0, 10);
 scene.add(sphere);
 
-const sphereA = new THREE.Mesh(sphereGeometry, sphereMaterial);
+const sphereA = new THREE.Mesh(sphereGeometry, spheremovieMaterial);
 sphereA.position.set(-20, -8, 20);
 scene.add(sphereA);
 
