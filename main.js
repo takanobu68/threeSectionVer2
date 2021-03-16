@@ -17,9 +17,13 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
 
+const movie = document.getElementById("three-video5");
+movie.src = "./assets/video05.mp4";
+const videoTexture = new THREE.VideoTexture(movie);
+
 const geometry = new THREE.PlaneGeometry(30, 25);
 const material = new THREE.MeshBasicMaterial({
-  color: 0xffff00,
+  map: videoTexture,
   side: THREE.DoubleSide,
 });
 const plane = new THREE.Mesh(geometry, material);
@@ -65,6 +69,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 renderer.render(scene, camera);
 
 function draw() {
+  // videoTexture.needsUpdate = true;
   renderer.render(scene, camera);
   requestAnimationFrame(draw);
 }
