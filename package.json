@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/takanobu68/threeSectionVer2/issues"
   },
-  "homepage": "https://github.com/takanobu68/threeSectionVer2#readme"
+  "homepage": "https://github.com/takanobu68/threeSectionVer2#readme",
+  "dependencies": {
+    "gsap": "^3.6.0",
+    "three": "^0.126.1"
+  }
 }
