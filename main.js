@@ -116,6 +116,8 @@ const arrow = new THREE.ArrowHelper(
 );
 scene.add(arrow);
 
+container.addEventListener("click", hoge);
+
 function hoge(e) {
   if (items.length) {
     items[0].object.material.opacity = 1;
@@ -133,19 +135,20 @@ function useRaycast() {
   arrow.setDirection(rayCast.ray.direction);
   items = rayCast.intersectObjects(scene.children);
   if (items[0].object.name) {
-    items.forEach((sphere) => moveSphere(sphere));
+    items.forEach((target) => moveSphere(target));
   }
 }
 
-container.addEventListener("click", hoge);
+let saveTargetOriginalPos = [];
 
-let orijinPos = [];
+function moveSphere(target) {
+  const targetPos = target.object.position;
+  const targetMaterial = target.object.material;
 
-function moveSphere(obj) {
-  orijinPos[0] = new THREE.Vector3(
-    obj.object.position.x,
-    obj.object.position.y,
-    obj.object.position.z
+  saveTargetOriginalPos = new THREE.Vector3(
+    targetPos.x,
+    targetPos.y,
+    targetPos.z
   );
 
   const t1 = gsap.timeline({
@@ -155,19 +158,19 @@ function moveSphere(obj) {
     onComplete: () => {
       sphere.material.map.image.setAttribute(
         "src",
-        obj.object.material.map.image.src
+        targetMaterial.map.image.src
       );
       sphere.material.map.image.setAttribute("loop", true);
       sphere.material.map.image.play();
 
-      move(obj.object.position);
+      returnMove(targetPos);
 
-      obj.object.material.opacity = 0.5;
-      obj.object.material.transparent = true;
+      targetMaterial.opacity = 0.5;
+      targetMaterial.transparent = true;
       container.addEventListener("click", hoge);
     },
   });
-  t1.to(obj.object.position, {
+  t1.to(targetPos, {
     x: sphere.position.x,
     y: sphere.position.y,
     z: sphere.position.z,
@@ -175,11 +178,11 @@ function moveSphere(obj) {
   });
 }
 
-function move(pos) {
-  gsap.to(pos, {
-    x: orijinPos[0].x,
-    y: orijinPos[0].y,
-    z: orijinPos[0].z,
+function returnMove(targetPos) {
+  gsap.to(targetPos, {
+    x: saveTargetOriginalPos.x,
+    y: saveTargetOriginalPos.y,
+    z: saveTargetOriginalPos.z,
     delay: 0.5,
   });
 }
