@@ -142,7 +142,8 @@ function test(obj) {
       sphere.material.map.image.setAttribute("loop", true);
       sphere.material.map.image.play();
       console.log(orijinPos[0]);
-      obj.object.position.set(orijinPos[0].x, orijinPos[0].y, orijinPos[0].z);
+      move(obj.object.position);
+      // obj.object.position.set(orijinPos[0].x, orijinPos[0].y, orijinPos[0].z);
     },
   });
   t1.to(obj.object.position, {
@@ -150,6 +151,15 @@ function test(obj) {
     y: sphere.position.y,
     z: sphere.position.z,
     duration: 3,
+  });
+}
+
+function move(pos) {
+  gsap.to(pos, {
+    x: orijinPos[0].x,
+    y: orijinPos[0].y,
+    z: orijinPos[0].z,
+    delay: 0.5,
   });
 }
 
