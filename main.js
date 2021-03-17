@@ -82,22 +82,27 @@ scene.add(sphere);
 
 const sphereA = new THREE.Mesh(sphereGeometry, spheremovieMaterial5);
 sphereA.position.set(-20, -8, 20);
+sphereA.name = "sphere-A";
 scene.add(sphereA);
 
 const sphereE = new THREE.Mesh(sphereGeometry, spheremovieMaterial4);
 sphereE.position.set(20, -8, 20);
+sphereE.name = "sphere-E";
 scene.add(sphereE);
 
 const sphereB = new THREE.Mesh(sphereGeometry, spheremovieMaterial1);
 sphereB.position.set(-10, -8, 20);
+sphereB.name = "sphere-B";
 scene.add(sphereB);
 
 const sphereC = new THREE.Mesh(sphereGeometry, spheremovieMaterial2);
 sphereC.position.set(0, -8, 20);
+sphereC.name = "sphere-C";
 scene.add(sphereC);
 
 const sphereD = new THREE.Mesh(sphereGeometry, spheremovieMaterial3);
 sphereD.position.set(10, -8, 20);
+sphereD.name = "sphere-D";
 scene.add(sphereD);
 
 const rayCast = new THREE.Raycaster();
@@ -120,11 +125,15 @@ function hoge(e) {
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
   mouse.y = (e.clientY / window.innerHeight) * -2 + 1;
 
+  useRaycast();
+}
+
+function useRaycast() {
   rayCast.setFromCamera(mouse, camera);
   arrow.setDirection(rayCast.ray.direction);
   items = rayCast.intersectObjects(scene.children);
-  if (items) {
-    items.forEach((obj) => test(obj));
+  if (items[0].object.name) {
+    items.forEach((sphere) => moveSphere(sphere));
   }
 }
 
@@ -132,7 +141,7 @@ container.addEventListener("click", hoge);
 
 let orijinPos = [];
 
-function test(obj) {
+function moveSphere(obj) {
   orijinPos[0] = new THREE.Vector3(
     obj.object.position.x,
     obj.object.position.y,
