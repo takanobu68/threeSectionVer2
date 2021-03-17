@@ -152,6 +152,9 @@ function test(obj) {
   );
   console.log(orijinPos[0]);
   const t1 = gsap.timeline({
+    onStart: () => {
+      container.removeEventListener("click", hoge);
+    },
     onComplete: () => {
       sphere.material.map.image.setAttribute(
         "src",
@@ -164,6 +167,7 @@ function test(obj) {
       // obj.object.position.set(orijinPos[0].x, orijinPos[0].y, orijinPos[0].z);
       obj.object.material.opacity = 0.5;
       obj.object.material.transparent = true;
+      container.addEventListener("click", hoge);
     },
   });
   t1.to(obj.object.position, {
