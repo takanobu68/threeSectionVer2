@@ -56,6 +56,11 @@ const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
 const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 const spheremovieMaterial1 = new THREE.MeshBasicMaterial({
   map: videoTexture1,
+  // transparent: true,
+  // opacity: 0.7,
+  // alphaMap: 0x00ff00,
+  // opacity: 0.1,
+  // transparency: true,
 });
 const spheremovieMaterial2 = new THREE.MeshBasicMaterial({
   map: videoTexture2,
@@ -97,8 +102,8 @@ scene.add(sphereD);
 
 const rayCast = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-let items;
-let arrow = new THREE.ArrowHelper(
+let items = [];
+const arrow = new THREE.ArrowHelper(
   rayCast.ray.direction,
   camera.position,
   10,
@@ -106,6 +111,16 @@ let arrow = new THREE.ArrowHelper(
 );
 scene.add(arrow);
 container.addEventListener("click", (e) => {
+  console.log(items);
+  // if (array.length) return;
+  if (items.length) {
+    console.log(items.length);
+    // if (!items.length) return;
+    items[0].object.material.opacity = 1;
+    items[0].object.material.transparent = false;
+    // return;
+  }
+
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
   mouse.y = (e.clientY / window.innerHeight) * -2 + 1;
 
@@ -144,6 +159,8 @@ function test(obj) {
       console.log(orijinPos[0]);
       move(obj.object.position);
       // obj.object.position.set(orijinPos[0].x, orijinPos[0].y, orijinPos[0].z);
+      obj.object.material.opacity = 0.5;
+      obj.object.material.transparent = true;
     },
   });
   t1.to(obj.object.position, {
