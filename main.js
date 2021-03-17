@@ -118,7 +118,7 @@ scene.add(arrow);
 
 container.addEventListener("click", hoge);
 
-function hoge(e) {
+function startMovingImage(e) {
   if (items.length) {
     items[0].object.material.opacity = 1;
     items[0].object.material.transparent = false;
@@ -161,7 +161,7 @@ function moveOn(targetPos, targetMaterial) {
     z: sphere.position.z,
     duration: 3,
     onStart: () => {
-      container.removeEventListener("click", hoge);
+      container.removeEventListener("click", startMovingImage);
     },
     onComplete: () => {
       moveOnComplete(targetPos, targetMaterial);
@@ -178,7 +178,7 @@ function moveOnComplete(targetPos, targetMaterial) {
 
   targetMaterial.opacity = 0.5;
   targetMaterial.transparent = true;
-  container.addEventListener("click", hoge);
+  container.addEventListener("click", startMovingImage);
 }
 
 function goBack(targetPos) {
