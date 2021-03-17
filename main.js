@@ -118,6 +118,8 @@ container.addEventListener("click", (e) => {
   }
 });
 
+let orijinPos = [];
+
 function test(obj) {
   console.log(obj.object.material.map.image.getAttribute("src"));
   console.log(sphere.material.map.image.getAttribute("src"));
@@ -125,6 +127,12 @@ function test(obj) {
   console.log(obj.object.material.map.image);
   console.log(obj.object.position);
   console.log(sphere.position.x, sphere.position.y);
+  orijinPos[0] = new THREE.Vector3(
+    obj.object.position.x,
+    obj.object.position.y,
+    obj.object.position.z
+  );
+  console.log(orijinPos[0]);
   const t1 = gsap.timeline({
     onComplete: () => {
       sphere.material.map.image.setAttribute(
@@ -132,6 +140,8 @@ function test(obj) {
         obj.object.material.map.image.src
       );
       sphere.material.map.image.play();
+      console.log(orijinPos[0]);
+      obj.object.position.set(orijinPos[0].x, orijinPos[0].y, orijinPos[0].z);
     },
   });
   t1.to(obj.object.position, {
