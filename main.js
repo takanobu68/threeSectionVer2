@@ -151,34 +151,37 @@ function moveSphere(target) {
     targetPos.z
   );
 
-  const t1 = gsap.timeline({
-    onStart: () => {
-      container.removeEventListener("click", hoge);
-    },
-    onComplete: () => {
-      sphere.material.map.image.setAttribute(
-        "src",
-        targetMaterial.map.image.src
-      );
-      sphere.material.map.image.setAttribute("loop", true);
-      sphere.material.map.image.play();
+  moveOn(targetPos, targetMaterial);
+}
 
-      returnMove(targetPos);
-
-      targetMaterial.opacity = 0.5;
-      targetMaterial.transparent = true;
-      container.addEventListener("click", hoge);
-    },
-  });
-  t1.to(targetPos, {
+function moveOn(targetPos, targetMaterial) {
+  gsap.to(targetPos, {
     x: sphere.position.x,
     y: sphere.position.y,
     z: sphere.position.z,
     duration: 3,
+    onStart: () => {
+      container.removeEventListener("click", hoge);
+    },
+    onComplete: () => {
+      moveOnComplete(targetPos, targetMaterial);
+    },
   });
 }
 
-function returnMove(targetPos) {
+function moveOnComplete(targetPos, targetMaterial) {
+  sphere.material.map.image.setAttribute("src", targetMaterial.map.image.src);
+  sphere.material.map.image.setAttribute("loop", true);
+  sphere.material.map.image.play();
+
+  goBack(targetPos);
+
+  targetMaterial.opacity = 0.5;
+  targetMaterial.transparent = true;
+  container.addEventListener("click", hoge);
+}
+
+function goBack(targetPos) {
   gsap.to(targetPos, {
     x: saveTargetOriginalPos.x,
     y: saveTargetOriginalPos.y,
