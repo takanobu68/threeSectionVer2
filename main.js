@@ -112,14 +112,9 @@ const arrow = new THREE.ArrowHelper(
 scene.add(arrow);
 
 function hoge(e) {
-  console.log(items);
-  // if (array.length) return;
   if (items.length) {
-    console.log(items.length);
-    // if (!items.length) return;
     items[0].object.material.opacity = 1;
     items[0].object.material.transparent = false;
-    // return;
   }
 
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -129,7 +124,6 @@ function hoge(e) {
   arrow.setDirection(rayCast.ray.direction);
   items = rayCast.intersectObjects(scene.children);
   if (items) {
-    // items.forEach((obj) => console.log(obj.object.position));
     items.forEach((obj) => test(obj));
   }
 }
@@ -139,18 +133,12 @@ container.addEventListener("click", hoge);
 let orijinPos = [];
 
 function test(obj) {
-  console.log(obj.object.material.map.image.getAttribute("src"));
-  console.log(sphere.material.map.image.getAttribute("src"));
-  console.log(obj.object.material.map.image.src);
-  console.log(obj.object.material.map.image);
-  console.log(obj.object.position);
-  console.log(sphere.position.x, sphere.position.y);
   orijinPos[0] = new THREE.Vector3(
     obj.object.position.x,
     obj.object.position.y,
     obj.object.position.z
   );
-  console.log(orijinPos[0]);
+
   const t1 = gsap.timeline({
     onStart: () => {
       container.removeEventListener("click", hoge);
@@ -162,9 +150,9 @@ function test(obj) {
       );
       sphere.material.map.image.setAttribute("loop", true);
       sphere.material.map.image.play();
-      console.log(orijinPos[0]);
+
       move(obj.object.position);
-      // obj.object.position.set(orijinPos[0].x, orijinPos[0].y, orijinPos[0].z);
+
       obj.object.material.opacity = 0.5;
       obj.object.material.transparent = true;
       container.addEventListener("click", hoge);
