@@ -24,19 +24,11 @@ const movie3 = document.getElementById("three-video3");
 const movie4 = document.getElementById("three-video4");
 const movie5 = document.getElementById("three-video5");
 
-<<<<<<< HEAD
-movie1.src = "./assets/video1.mp4";
-movie2.src = "./assets/video2.mp4";
-movie3.src = "./assets/video3.mp4";
-movie4.src = "./assets/video4.mp4";
-movie5.src = "./assets/video5.mp4";
-=======
 movie1.src = "./assets/video01.mp4";
 movie2.src = "./assets/video02.mp4";
 movie3.src = "./assets/video03.mp4";
 movie4.src = "./assets/video04.mp4";
 movie5.src = "./assets/video05.mp4";
->>>>>>> feature/Refactoring-videoTexture
 
 const videoTexture1 = new THREE.VideoTexture(movie1);
 const videoTexture2 = new THREE.VideoTexture(movie2);
