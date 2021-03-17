@@ -119,9 +119,21 @@ container.addEventListener("click", (e) => {
 });
 
 function test(obj) {
+  console.log(obj.object.material.map.image.getAttribute("src"));
+  console.log(sphere.material.map.image.getAttribute("src"));
+  console.log(obj.object.material.map.image.src);
+  console.log(obj.object.material.map.image);
   console.log(obj.object.position);
   console.log(sphere.position.x, sphere.position.y);
-  const t1 = gsap.timeline();
+  const t1 = gsap.timeline({
+    onComplete: () => {
+      sphere.material.map.image.setAttribute(
+        "src",
+        obj.object.material.map.image.src
+      );
+      sphere.material.map.image.play();
+    },
+  });
   t1.to(obj.object.position, {
     x: sphere.position.x,
     y: sphere.position.y,
@@ -135,7 +147,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 renderer.render(scene, camera);
 
 function draw() {
-  // videoTexture.needsUpdate = true;
+  videoTexture5.needsUpdate = true;
   renderer.render(scene, camera);
   requestAnimationFrame(draw);
 }
