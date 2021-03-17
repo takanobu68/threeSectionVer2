@@ -94,6 +94,33 @@ const sphereD = new THREE.Mesh(sphereGeometry, spheremovieMaterial3);
 sphereD.position.set(10, -8, 20);
 scene.add(sphereD);
 
+const rayCast = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let items;
+let arrow = new THREE.ArrowHelper(
+  rayCast.ray.direction,
+  camera.position,
+  10,
+  0xff0000
+);
+scene.add(arrow);
+container.addEventListener("click", (e) => {
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = (e.clientY / window.innerHeight) * -2 + 1;
+
+  rayCast.setFromCamera(mouse, camera);
+  arrow.setDirection(rayCast.ray.direction);
+  items = rayCast.intersectObjects(scene.children);
+  if (items) {
+    // items.forEach((obj) => console.log(obj.object.position));
+    items.forEach((obj) => test(obj));
+  }
+});
+
+function test(obj) {
+  console.log(obj.object.position);
+}
+
 const controls = new OrbitControls(camera, renderer.domElement);
 
 renderer.render(scene, camera);
