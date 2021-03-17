@@ -139,6 +139,7 @@ function test(obj) {
         "src",
         obj.object.material.map.image.src
       );
+      sphere.material.map.image.setAttribute("loop", true);
       sphere.material.map.image.play();
       console.log(orijinPos[0]);
       obj.object.position.set(orijinPos[0].x, orijinPos[0].y, orijinPos[0].z);
