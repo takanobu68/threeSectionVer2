@@ -110,7 +110,8 @@ const arrow = new THREE.ArrowHelper(
   0xff0000
 );
 scene.add(arrow);
-container.addEventListener("click", (e) => {
+
+function hoge(e) {
   console.log(items);
   // if (array.length) return;
   if (items.length) {
@@ -131,7 +132,9 @@ container.addEventListener("click", (e) => {
     // items.forEach((obj) => console.log(obj.object.position));
     items.forEach((obj) => test(obj));
   }
-});
+}
+
+container.addEventListener("click", hoge);
 
 let orijinPos = [];
 
