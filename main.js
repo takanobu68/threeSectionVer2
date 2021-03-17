@@ -24,11 +24,11 @@ const movie3 = document.getElementById("three-video3");
 const movie4 = document.getElementById("three-video4");
 const movie5 = document.getElementById("three-video5");
 
-movie1.src = "./assets/video06.mp4";
-movie2.src = "./assets/video02.mp4";
-movie3.src = "./assets/video03.mp4";
-movie4.src = "./assets/video07.mp4";
-movie5.src = "./assets/video05.mp4";
+movie1.src = "./assets/video1.mp4";
+movie2.src = "./assets/video2.mp4";
+movie3.src = "./assets/video3.mp4";
+movie4.src = "./assets/video4.mp4";
+movie5.src = "./assets/video5.mp4";
 
 const videoTexture1 = new THREE.VideoTexture(movie1);
 const videoTexture2 = new THREE.VideoTexture(movie2);
@@ -116,7 +116,7 @@ const arrow = new THREE.ArrowHelper(
 );
 scene.add(arrow);
 
-container.addEventListener("click", hoge);
+container.addEventListener("click", startMovingImage);
 
 function startMovingImage(e) {
   if (items.length) {
