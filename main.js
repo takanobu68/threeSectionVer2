@@ -1,5 +1,6 @@
 import * as THREE from "./node_modules/three/build/three.module.js";
 import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
+import { gsap } from "./node_modules/gsap/all.js";
 
 const container = document.getElementById("scene-container");
 
@@ -119,6 +120,14 @@ container.addEventListener("click", (e) => {
 
 function test(obj) {
   console.log(obj.object.position);
+  console.log(sphere.position.x, sphere.position.y);
+  const t1 = gsap.timeline();
+  t1.to(obj.object.position, {
+    x: sphere.position.x,
+    y: sphere.position.y,
+    z: sphere.position.z,
+    duration: 3,
+  });
 }
 
 const controls = new OrbitControls(camera, renderer.domElement);
