@@ -53,61 +53,22 @@ const centerSphere = new THREE.Mesh(sphereGeometry, centerSpheremovieMaterial);
 centerSphere.position.set(0, 0, 10);
 scene.add(centerSphere);
 
-const movie1 = document.getElementById("three-video1");
-const movie2 = document.getElementById("three-video2");
-const movie3 = document.getElementById("three-video3");
-const movie4 = document.getElementById("three-video4");
-const movie5 = document.getElementById("three-video5");
+// 手前に配置する5つのsphereの設定
+// forEachによる一括配置
+const frontSpheres = document.querySelectorAll(".front");
 
-movie1.src = "./assets/video01.mp4";
-movie2.src = "./assets/video02.mp4";
-movie3.src = "./assets/video03.mp4";
-movie4.src = "./assets/video04.mp4";
-movie5.src = "./assets/video05.mp4";
-
-const videoTexture1 = new THREE.VideoTexture(movie1);
-const videoTexture2 = new THREE.VideoTexture(movie2);
-const videoTexture3 = new THREE.VideoTexture(movie3);
-const videoTexture4 = new THREE.VideoTexture(movie4);
-const videoTexture5 = new THREE.VideoTexture(movie5);
-
-const spheremovieMaterial2 = new THREE.MeshBasicMaterial({
-  map: videoTexture2,
+const frontSpherePos = [-20, -10, 0, 10, 20];
+frontSpheres.forEach((el, i) => {
+  el.src = `./assets/video0${i + 1}.mp4`;
+  const videoTexture = new THREE.VideoTexture(el);
+  const videoMaterial = new THREE.MeshBasicMaterial({
+    map: videoTexture,
+  });
+  const sphere = new THREE.Mesh(sphereGeometry, videoMaterial);
+  sphere.position.set(frontSpherePos[i], -8, 20);
+  sphere.name = `sphere-${i + 1}`;
+  scene.add(sphere);
 });
-const spheremovieMaterial3 = new THREE.MeshBasicMaterial({
-  map: videoTexture3,
-});
-const spheremovieMaterial4 = new THREE.MeshBasicMaterial({
-  map: videoTexture4,
-});
-const spheremovieMaterial5 = new THREE.MeshBasicMaterial({
-  map: videoTexture5,
-});
-
-const sphereA = new THREE.Mesh(sphereGeometry, spheremovieMaterial5);
-sphereA.position.set(-20, -8, 20);
-sphereA.name = "sphere-A";
-scene.add(sphereA);
-
-const sphereE = new THREE.Mesh(sphereGeometry, spheremovieMaterial4);
-sphereE.position.set(20, -8, 20);
-sphereE.name = "sphere-E";
-scene.add(sphereE);
-
-// const sphereB = new THREE.Mesh(sphereGeometry, spheremovieMaterial1);
-// sphereB.position.set(-10, -8, 20);
-// sphereB.name = "sphere-B";
-// scene.add(sphereB);
-
-const sphereC = new THREE.Mesh(sphereGeometry, spheremovieMaterial2);
-sphereC.position.set(0, -8, 20);
-sphereC.name = "sphere-C";
-scene.add(sphereC);
-
-const sphereD = new THREE.Mesh(sphereGeometry, spheremovieMaterial3);
-sphereD.position.set(10, -8, 20);
-sphereD.name = "sphere-D";
-scene.add(sphereD);
 
 const rayCast = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -199,7 +160,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 renderer.render(scene, camera);
 
 function draw() {
-  videoTexture5.needsUpdate = true;
+  // videoTexture5.needsUpdate = true;
   renderer.render(scene, camera);
   requestAnimationFrame(draw);
 }
