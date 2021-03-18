@@ -121,10 +121,10 @@ function moveSphere(target) {
 
 function moveOn(targetPos, targetMaterial) {
   gsap.to(targetPos, {
-    x: sphere.position.x,
-    y: sphere.position.y,
-    z: sphere.position.z,
-    duration: 3,
+    x: centerSphere.position.x,
+    y: centerSphere.position.y,
+    z: centerSphere.position.z,
+    duration: 1,
     onStart: () => {
       container.removeEventListener("click", startMovingImage);
     },
@@ -135,9 +135,12 @@ function moveOn(targetPos, targetMaterial) {
 }
 
 function moveOnComplete(targetPos, targetMaterial) {
-  sphere.material.map.image.setAttribute("src", targetMaterial.map.image.src);
-  sphere.material.map.image.setAttribute("loop", true);
-  sphere.material.map.image.play();
+  centerSphere.material.map.image.setAttribute(
+    "src",
+    targetMaterial.map.image.src
+  );
+  centerSphere.material.map.image.setAttribute("loop", true);
+  centerSphere.material.map.image.play();
 
   goBack(targetPos);
 
@@ -160,7 +163,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 renderer.render(scene, camera);
 
 function draw() {
-  // videoTexture5.needsUpdate = true;
+  initialSettingVideoTexture.needsUpdate = true;
   renderer.render(scene, camera);
   requestAnimationFrame(draw);
 }
