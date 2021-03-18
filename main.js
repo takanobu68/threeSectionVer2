@@ -10,12 +10,14 @@ let scene,
   controls,
   centerSphere,
   geometry,
-  material;
+  material,
+  sphereGeometry;
 
 let saveTargetOriginalPos = [];
 let items = [];
 const mouse = new THREE.Vector2();
 let initialSettingVideoTexture;
+const frontSpherePos = [-20, -10, 0, 10, 20];
 
 function init() {
   container = document.getElementById("scene-container");
@@ -53,7 +55,7 @@ function init() {
 
   // 中央に配置するsphereの設定
   // sphereGeometryは他のsphereにも使用
-  const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+  sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
   const centerSpheremovieMaterial = new THREE.MeshBasicMaterial({
     map: initialSettingVideoTexture,
   });
@@ -65,23 +67,13 @@ function init() {
   // forEachによる一括配置
   const frontSpheres = document.querySelectorAll(".front");
 
-  const frontSpherePos = [-20, -10, 0, 10, 20];
   frontSpheres.forEach((el, i) => {
-    el.src = `./assets/video0${i + 1}.mp4`;
-    const videoTexture = new THREE.VideoTexture(el);
-    const videoMaterial = new THREE.MeshBasicMaterial({
-      map: videoTexture,
-    });
-    const sphere = new THREE.Mesh(sphereGeometry, videoMaterial);
-    sphere.position.set(frontSpherePos[i], -8, 20);
-    sphere.name = `sphere-${i + 1}`;
-    scene.add(sphere);
+    createFrontSphere(el, i);
   });
 
   rayCast = new THREE.Raycaster();
-  items = [];
-
   controls = new OrbitControls(camera, renderer.domElement);
+
   container.addEventListener("click", startMovingImage);
 }
 
@@ -91,6 +83,18 @@ function createPlane(position) {
   plane.rotation.y = planePos ? Math.PI / 4 : -Math.PI / 4;
   planePos ? plane.position.set(-20, 2, 0) : plane.position.set(20, 2, 0);
   scene.add(plane);
+}
+
+function createFrontSphere(el, i) {
+  el.src = `./assets/video0${i + 1}.mp4`;
+  const videoTexture = new THREE.VideoTexture(el);
+  const videoMaterial = new THREE.MeshBasicMaterial({
+    map: videoTexture,
+  });
+  const sphere = new THREE.Mesh(sphereGeometry, videoMaterial);
+  sphere.position.set(frontSpherePos[i], -8, 20);
+  sphere.name = `sphere-${i + 1}`;
+  scene.add(sphere);
 }
 
 function startMovingImage(e) {
