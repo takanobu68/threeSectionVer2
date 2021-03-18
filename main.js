@@ -18,27 +18,45 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
 
+<<<<<<< HEAD
 const movies = document.querySelectorAll(".video");
 const initMovie = document.getElementById("initMovie");
 const initVideoTexture = new THREE.VideoTexture(initMovie);
+=======
+// 動画が流れるオブジェクトの初期配置設定
+const initialSettingMovie = document.getElementById("initial-setting-movie");
+// srcはjs側で設定しないと不具合が出る
+initialSettingMovie.src = "./assets/video01.mp4";
+const initialSettingVideoTexture = new THREE.VideoTexture(initialSettingMovie);
+>>>>>>> debug/front-sphere
 
+// geometry,materialは変更の可能性があるので、詳細な命名はしない
 const geometry = new THREE.PlaneGeometry(30, 25);
 const material = new THREE.MeshBasicMaterial({
+<<<<<<< HEAD
   map: initVideoTexture,
+=======
+  map: initialSettingVideoTexture,
+>>>>>>> debug/front-sphere
   side: THREE.DoubleSide,
 });
-const plane = new THREE.Mesh(geometry, material);
-const plane2 = new THREE.Mesh(geometry, material);
 
-plane.rotation.y = Math.PI / 4;
-plane.position.set(-20, 2, 0);
-scene.add(plane);
+// Plane作成を関数化
+createPlane("left");
+createPlane("right");
 
-plane2.rotation.y = -Math.PI / 4;
-plane2.position.set(20, 2, 0);
-scene.add(plane2);
+function createPlane(position) {
+  const planePos = position === "left" ? true : false;
+  const plane = new THREE.Mesh(geometry, material);
+  plane.rotation.y = planePos ? Math.PI / 4 : -Math.PI / 4;
+  planePos ? plane.position.set(-20, 2, 0) : plane.position.set(20, 2, 0);
+  scene.add(plane);
+}
 
+// 中央に配置するsphereの設定
+// sphereGeometryは他のsphereにも使用
 const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+<<<<<<< HEAD
 const spheremovieMaterial = new THREE.MeshBasicMaterial({
   map: initVideoTexture,
 });
@@ -50,6 +68,23 @@ const frontSpherePos = [-20, -10, 0, 10, 20];
 movies.forEach((el, i) => {
   const videoTexture = new THREE.VideoTexture(el);
 
+=======
+const centerSpheremovieMaterial = new THREE.MeshBasicMaterial({
+  map: initialSettingVideoTexture,
+});
+const centerSphere = new THREE.Mesh(sphereGeometry, centerSpheremovieMaterial);
+centerSphere.position.set(0, 0, 10);
+scene.add(centerSphere);
+
+// 手前に配置する5つのsphereの設定
+// forEachによる一括配置
+const frontSpheres = document.querySelectorAll(".front");
+
+const frontSpherePos = [-20, -10, 0, 10, 20];
+frontSpheres.forEach((el, i) => {
+  el.src = `./assets/video0${i + 1}.mp4`;
+  const videoTexture = new THREE.VideoTexture(el);
+>>>>>>> debug/front-sphere
   const videoMaterial = new THREE.MeshBasicMaterial({
     map: videoTexture,
   });
@@ -111,10 +146,10 @@ function moveSphere(target) {
 
 function moveOn(targetPos, targetMaterial) {
   gsap.to(targetPos, {
-    x: sphere.position.x,
-    y: sphere.position.y,
-    z: sphere.position.z,
-    duration: 3,
+    x: centerSphere.position.x,
+    y: centerSphere.position.y,
+    z: centerSphere.position.z,
+    duration: 1,
     onStart: () => {
       container.removeEventListener("click", startMovingImage);
     },
@@ -125,9 +160,12 @@ function moveOn(targetPos, targetMaterial) {
 }
 
 function moveOnComplete(targetPos, targetMaterial) {
-  sphere.material.map.image.setAttribute("src", targetMaterial.map.image.src);
-  sphere.material.map.image.setAttribute("loop", true);
-  sphere.material.map.image.play();
+  centerSphere.material.map.image.setAttribute(
+    "src",
+    targetMaterial.map.image.src
+  );
+  centerSphere.material.map.image.setAttribute("loop", true);
+  centerSphere.material.map.image.play();
 
   goBack(targetPos);
 
@@ -150,7 +188,11 @@ const controls = new OrbitControls(camera, renderer.domElement);
 renderer.render(scene, camera);
 
 function draw() {
+<<<<<<< HEAD
   initVideoTexture.needsUpdate = true;
+=======
+  initialSettingVideoTexture.needsUpdate = true;
+>>>>>>> debug/front-sphere
   renderer.render(scene, camera);
   requestAnimationFrame(draw);
 }
