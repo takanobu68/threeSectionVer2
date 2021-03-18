@@ -18,6 +18,28 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
 
+// 動画が流れるオブジェクトの初期配置設定
+const initialSettingMovie = document.getElementById("initial-setting-movie");
+// srcはjs側で設定しないと不具合が出る
+initialSettingMovie.src = "./assets/video01.mp4";
+const initialSettingVideoTexture = new THREE.VideoTexture(initialSettingMovie);
+
+const geometry = new THREE.PlaneGeometry(30, 25);
+const material = new THREE.MeshBasicMaterial({
+  map: initialSettingVideoTexture,
+  side: THREE.DoubleSide,
+});
+const plane = new THREE.Mesh(geometry, material);
+const plane2 = new THREE.Mesh(geometry, material);
+
+plane.rotation.y = Math.PI / 4;
+plane.position.set(-20, 2, 0);
+scene.add(plane);
+
+plane2.rotation.y = -Math.PI / 4;
+plane2.position.set(20, 2, 0);
+scene.add(plane2);
+
 const movie1 = document.getElementById("three-video1");
 const movie2 = document.getElementById("three-video2");
 const movie3 = document.getElementById("three-video3");
@@ -35,22 +57,6 @@ const videoTexture2 = new THREE.VideoTexture(movie2);
 const videoTexture3 = new THREE.VideoTexture(movie3);
 const videoTexture4 = new THREE.VideoTexture(movie4);
 const videoTexture5 = new THREE.VideoTexture(movie5);
-
-const geometry = new THREE.PlaneGeometry(30, 25);
-const material = new THREE.MeshBasicMaterial({
-  map: videoTexture5,
-  side: THREE.DoubleSide,
-});
-const plane = new THREE.Mesh(geometry, material);
-const plane2 = new THREE.Mesh(geometry, material);
-
-plane.rotation.y = Math.PI / 4;
-plane.position.set(-20, 2, 0);
-scene.add(plane);
-
-plane2.rotation.y = -Math.PI / 4;
-plane2.position.set(20, 2, 0);
-scene.add(plane2);
 
 const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
 const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
