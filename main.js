@@ -24,21 +24,32 @@ const initialSettingMovie = document.getElementById("initial-setting-movie");
 initialSettingMovie.src = "./assets/video01.mp4";
 const initialSettingVideoTexture = new THREE.VideoTexture(initialSettingMovie);
 
+// geometry,materialは変更の可能性があるので、詳細な命名はしない
 const geometry = new THREE.PlaneGeometry(30, 25);
 const material = new THREE.MeshBasicMaterial({
   map: initialSettingVideoTexture,
   side: THREE.DoubleSide,
 });
-const plane = new THREE.Mesh(geometry, material);
-const plane2 = new THREE.Mesh(geometry, material);
 
+const plane = new THREE.Mesh(geometry, material);
 plane.rotation.y = Math.PI / 4;
 plane.position.set(-20, 2, 0);
 scene.add(plane);
 
+const plane2 = new THREE.Mesh(geometry, material);
 plane2.rotation.y = -Math.PI / 4;
 plane2.position.set(20, 2, 0);
 scene.add(plane2);
+
+// 中央に配置するsphereの設定
+// sphereGeometryは他のsphereにも使用
+const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+const centerSpheremovieMaterial = new THREE.MeshBasicMaterial({
+  map: initialSettingVideoTexture,
+});
+const centerSphere = new THREE.Mesh(sphereGeometry, centerSpheremovieMaterial);
+centerSphere.position.set(0, 0, 10);
+scene.add(centerSphere);
 
 const movie1 = document.getElementById("three-video1");
 const movie2 = document.getElementById("three-video2");
@@ -58,16 +69,6 @@ const videoTexture3 = new THREE.VideoTexture(movie3);
 const videoTexture4 = new THREE.VideoTexture(movie4);
 const videoTexture5 = new THREE.VideoTexture(movie5);
 
-const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
-const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-const spheremovieMaterial1 = new THREE.MeshBasicMaterial({
-  map: videoTexture1,
-  // transparent: true,
-  // opacity: 0.7,
-  // alphaMap: 0x00ff00,
-  // opacity: 0.1,
-  // transparency: true,
-});
 const spheremovieMaterial2 = new THREE.MeshBasicMaterial({
   map: videoTexture2,
 });
@@ -81,11 +82,6 @@ const spheremovieMaterial5 = new THREE.MeshBasicMaterial({
   map: videoTexture5,
 });
 
-const sphere = new THREE.Mesh(sphereGeometry, spheremovieMaterial5);
-
-sphere.position.set(0, 0, 10);
-scene.add(sphere);
-
 const sphereA = new THREE.Mesh(sphereGeometry, spheremovieMaterial5);
 sphereA.position.set(-20, -8, 20);
 sphereA.name = "sphere-A";
@@ -96,10 +92,10 @@ sphereE.position.set(20, -8, 20);
 sphereE.name = "sphere-E";
 scene.add(sphereE);
 
-const sphereB = new THREE.Mesh(sphereGeometry, spheremovieMaterial1);
-sphereB.position.set(-10, -8, 20);
-sphereB.name = "sphere-B";
-scene.add(sphereB);
+// const sphereB = new THREE.Mesh(sphereGeometry, spheremovieMaterial1);
+// sphereB.position.set(-10, -8, 20);
+// sphereB.name = "sphere-B";
+// scene.add(sphereB);
 
 const sphereC = new THREE.Mesh(sphereGeometry, spheremovieMaterial2);
 sphereC.position.set(0, -8, 20);
