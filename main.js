@@ -31,15 +31,17 @@ const material = new THREE.MeshBasicMaterial({
   side: THREE.DoubleSide,
 });
 
-const plane = new THREE.Mesh(geometry, material);
-plane.rotation.y = Math.PI / 4;
-plane.position.set(-20, 2, 0);
-scene.add(plane);
+// Plane作成を関数化
+createPlane("left");
+createPlane("right");
 
-const plane2 = new THREE.Mesh(geometry, material);
-plane2.rotation.y = -Math.PI / 4;
-plane2.position.set(20, 2, 0);
-scene.add(plane2);
+function createPlane(position) {
+  const planePos = position === "left" ? true : false;
+  const plane = new THREE.Mesh(geometry, material);
+  plane.rotation.y = planePos ? Math.PI / 4 : -Math.PI / 4;
+  planePos ? plane.position.set(-20, 2, 0) : plane.position.set(20, 2, 0);
+  scene.add(plane);
+}
 
 // 中央に配置するsphereの設定
 // sphereGeometryは他のsphereにも使用
